@@ -1,586 +1,342 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La historia de Antonio Sánchez</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/dist/typed.umd.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi historia - Antonio Sánchez</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --cream: #F7F3EC; 
+            --ink: #1C1A17; 
+            --warm: #8B6F47;
+            --accent: #C4773B; 
+            --light-warm: #E8DDD0; 
+            --muted: #6B6259;
+        }
+        body { 
+            background: var(--cream); 
+            color: var(--ink); 
+            font-family: 'Crimson Text', Georgia, serif; 
+            line-height: 1.8; 
+            overflow-x: hidden; 
+        }
+        header {
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            padding: 4rem 2rem; 
+            background: #1C1A17; 
+            position: relative;
+        }
+        .header-label { 
+            font-size: 0.72rem; 
+            letter-spacing: 0.25em; 
+            text-transform: uppercase; 
+            color: var(--accent); 
+            margin-bottom: 2rem; 
+            animation: fadeUp 0.8s ease 0.3s both; 
+        }
+        header h1 { 
+            font-size: clamp(2.6rem, 8vw, 5rem); 
+            color: #F7F3EC; 
+            line-height: 1.1; 
+            margin-bottom: 1.5rem; 
+            animation: fadeUp 0.9s ease 0.5s both; 
+        }
+        header h1 em { 
+            font-style: italic; 
+            color: var(--accent); 
+        }
+        .typed-line { 
+            font-size: clamp(0.95rem, 2.5vw, 1.2rem); 
+            color: rgba(247,243,236,0.6); 
+            max-width: 560px; 
+            min-height: 2em; 
+            animation: fadeUp 0.9s ease 0.8s both; 
+        }
+        .cursor { 
+            display: inline-block; 
+            width: 2px; 
+            height: 1em; 
+            background: var(--accent); 
+            vertical-align: text-bottom; 
+            animation: blink 0.8s step-end infinite; 
+        }
 
-  :root {
-    --cream: #F7F3EC;
-    --ink: #1C1A17;
-    --warm: #8B6F47;
-    --accent: #C4773B;
-    --light-warm: #E8DDD0;
-    --muted: #6B6259;
-    --red-soft: #C44B3B;
-  }
+        /* Scroll horizontal con efecto 3D */
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 4rem 2rem;
+            gap: 3rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            perspective: 1200px;
+        }
+        .section-card {
+            min-width: 85vw;
+            max-width: 760px;
+            background: var(--cream);
+            padding: 3rem 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            scroll-snap-align: center;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: rotateY(8deg) scale(0.95);
+        }
+        .horizontal-scroll:hover .section-card,
+        .section-card:hover {
+            transform: rotateY(0deg) scale(1);
+        }
 
-  html { scroll-behavior: smooth; }
+        .label { 
+            display: block; 
+            font-size: 0.65rem; 
+            letter-spacing: 0.3em; 
+            text-transform: uppercase; 
+            color: var(--accent); 
+            margin-bottom: 1.5rem; 
+        }
+        .story-wrap { 
+            border-left: 2px solid var(--light-warm); 
+            padding-left: 2rem; 
+        }
+        .story-wrap h2 { 
+            font-size: clamp(1.7rem, 4vw, 2.5rem); 
+            font-weight: normal; 
+            line-height: 1.25; 
+            margin-bottom: 2rem; 
+        }
+        .story-wrap p { 
+            font-size: 1.05rem; 
+            color: var(--muted); 
+            margin-bottom: 1.4rem; 
+        }
+        .story-wrap p strong { color: var(--ink); }
+        blockquote { 
+            border-left: 3px solid var(--accent); 
+            padding: 0.5rem 0 0.5rem 1.75rem; 
+            margin: 2rem 0; 
+        }
+        blockquote p { 
+            font-style: italic; 
+            font-size: 1.2rem; 
+            color: var(--ink); 
+            line-height: 1.5; 
+        }
 
-  body {
-    background: var(--cream);
-    color: var(--ink);
-    font-family: 'Source Serif 4', Georgia, serif;
-    font-weight: 300;
-    line-height: 1.8;
-    overflow-x: hidden;
-  }
+        .needs-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); 
+            gap: 1.5rem; 
+            margin-top: 1.5rem; 
+        }
+        .need-card { 
+            background: white; 
+            padding: 1.8rem 1.4rem; 
+            border: 1px solid var(--light-warm);
+            border-radius: 6px;
+        }
+        .need-card h3 { 
+            font-size: 1.1rem; 
+            margin-bottom: 0.6rem; 
+        }
+        .need-card p { 
+            font-size: 0.9rem; 
+            color: var(--muted); 
+            line-height: 1.5; 
+        }
 
-  /* HEADER */
-  header {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 4rem 2rem;
-    position: relative;
-    background: var(--ink);
-    overflow: hidden;
-  }
+        .donate-section { 
+            background: #1C1A17; 
+            color: #F7F3EC; 
+            padding: 5rem 2rem; 
+        }
+        .donate-inner { 
+            max-width: 660px; 
+            margin: 0 auto; 
+            text-align: center; 
+        }
+        .iban-box { 
+            background: rgba(255,255,255,0.05); 
+            border: 1px solid rgba(255,255,255,0.12); 
+            border-radius: 6px; 
+            padding: 2rem; 
+            text-align: left; 
+            margin: 2rem 0; 
+        }
+        .val { 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            color: #F7F3EC; 
+            letter-spacing: 0.04em; 
+            margin-bottom: 1.2rem; 
+            word-break: break-all; 
+            font-family: 'Courier New', monospace; 
+        }
+        .copy-btn { 
+            margin-top: 1rem; 
+            background: transparent; 
+            border: 1px solid rgba(255,255,255,0.3); 
+            color: #F7F3EC; 
+            font-family: 'Crimson Text', serif; 
+            font-size: 0.95rem; 
+            padding: 0.7rem 1.6rem; 
+            border-radius: 4px; 
+            cursor: pointer; 
+        }
+        .qr-area img {
+            max-width: 220px;
+            border: 8px solid white;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
 
-  header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      radial-gradient(ellipse 60% 50% at 30% 70%, rgba(139,111,71,0.18) 0%, transparent 70%),
-      radial-gradient(ellipse 40% 40% at 80% 20%, rgba(196,119,59,0.12) 0%, transparent 60%);
-  }
+        footer { 
+            background: #0F0E0C; 
+            color: rgba(247,243,236,0.4); 
+            text-align: center; 
+            padding: 2.5rem 1rem; 
+            font-size: 0.85rem; 
+        }
 
-  .header-label {
-    font-family: 'Source Serif 4', serif;
-    font-size: 0.75rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.3s forwards;
-  }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  header h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 700;
-    color: var(--cream);
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.5s forwards;
-  }
-
-  header h1 em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .typed-container {
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    color: rgba(247,243,236,0.65);
-    max-width: 600px;
-    min-height: 3em;
-    opacity: 0;
-    animation: fadeUp 0.9s ease 0.8s forwards;
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    animation: fadeUp 1s ease 1.5s forwards;
-  }
-
-  .scroll-hint span {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(247,243,236,0.4);
-  }
-
-  .scroll-arrow {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, rgba(196,119,59,0.8), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  /* SECTION BASE */
-  section {
-    padding: 5rem 2rem;
-    max-width: 780px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-size: 0.7rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    display: block;
-  }
-
-  /* STORY */
-  .story-section {
-    border-left: 2px solid var(--light-warm);
-    padding-left: 2rem;
-    margin-left: 1rem;
-  }
-
-  .story-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 400;
-    line-height: 1.25;
-    margin-bottom: 2rem;
-    color: var(--ink);
-  }
-
-  .story-section p {
-    font-size: 1.1rem;
-    color: var(--muted);
-    margin-bottom: 1.5rem;
-  }
-
-  .story-section p strong {
-    color: var(--ink);
-    font-weight: 600;
-  }
-
-  /* NEED CARDS */
-  .needs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1px;
-    background: var(--light-warm);
-    border: 1px solid var(--light-warm);
-    border-radius: 4px;
-    overflow: hidden;
-    margin: 3rem 0;
-  }
-
-  .need-card {
-    background: var(--cream);
-    padding: 1.75rem 1.5rem;
-    transition: background 0.2s;
-  }
-
-  .need-card:hover { background: #F0EBE2; }
-
-  .need-card .icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .need-card h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.4rem;
-  }
-
-  .need-card p {
-    font-size: 0.85rem;
-    color: var(--muted);
-    line-height: 1.5;
-  }
-
-  /* DIVIDER */
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 3rem 0;
-    max-width: 780px;
-    margin: 0 auto;
-  }
-
-  .divider-line {
-    flex: 1;
-    height: 1px;
-    background: var(--light-warm);
-  }
-
-  .divider-text {
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--warm);
-  }
-
-  /* DONATE SECTION */
-  .donate-section {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 5rem 2rem;
-    text-align: center;
-  }
-
-  .donate-inner {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .donate-section .section-label { color: var(--accent); }
-
-  .donate-section h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 400;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-
-  .donate-section h2 em { font-style: italic; color: var(--accent); }
-
-  .donate-section > .donate-inner > p {
-    color: rgba(247,243,236,0.65);
-    font-size: 1.05rem;
-    margin-bottom: 3rem;
-  }
-
-  /* IBAN BOX */
-  .iban-box {
-    background: rgba(247,243,236,0.06);
-    border: 1px solid rgba(247,243,236,0.15);
-    border-radius: 4px;
-    padding: 2rem;
-    margin-bottom: 2.5rem;
-    text-align: left;
-  }
-
-  .iban-box .label-small {
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .iban-box .value {
-    font-family: 'Source Serif 4', monospace;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--cream);
-    letter-spacing: 0.05em;
-    margin-bottom: 1.2rem;
-    word-break: break-all;
-  }
-
-  .iban-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 0.5rem;
-  }
-
-  @media (max-width: 480px) { .iban-row { grid-template-columns: 1fr; } }
-
-  .copy-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: transparent;
-    border: 1px solid rgba(247,243,236,0.3);
-    color: var(--cream);
-    font-family: 'Source Serif 4', serif;
-    font-size: 0.85rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 2px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.05em;
-    margin-top: 1rem;
-  }
-
-  .copy-btn:hover {
-    background: rgba(196,119,59,0.2);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .copy-btn.copied {
-    border-color: #5aab6e;
-    color: #5aab6e;
-  }
-
-  /* QR */
-  .qr-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2.5rem;
-  }
-
-  .qr-wrapper {
-    background: white;
-    padding: 1.2rem;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  .qr-label {
-    font-size: 0.8rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(247,243,236,0.5);
-  }
-
-  /* FOOTER */
-  footer {
-    background: #0F0E0C;
-    color: rgba(247,243,236,0.35);
-    text-align: center;
-    padding: 2.5rem;
-    font-size: 0.85rem;
-  }
-
-  footer strong { color: var(--accent); }
-
-  /* ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 1; }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* QUOTE BLOCK */
-  blockquote {
-    border-left: 3px solid var(--accent);
-    margin: 2.5rem 0;
-    padding: 0.5rem 0 0.5rem 2rem;
-  }
-
-  blockquote p {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--ink) !important;
-    line-height: 1.5;
-  }
-
-  /* ALERT BAND */
-  .alert-band {
-    background: rgba(196,75,59,0.1);
-    border-top: 1px solid rgba(196,75,59,0.25);
-    border-bottom: 1px solid rgba(196,75,59,0.25);
-    padding: 1rem 2rem;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--red-soft);
-    max-width: 100%;
-  }
-</style>
+        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes blink { 50% { opacity:0; } }
+    </style>
 </head>
 <body>
 
-<!-- HERO -->
 <header>
-  <p class="header-label">Una historia real · Zaragoza, 2025</p>
-  <h1>Soy <em>Antonio</em>.<br>Estoy en la calle.</h1>
-  <div class="typed-container">
-    <span id="typed-text"></span>
-  </div>
-  <div class="scroll-hint">
-    <span>Leer mi historia</span>
-    <div class="scroll-arrow"></div>
-  </div>
+    <p class="header-label">Zaragoza, abril 2026</p>
+    <h1>Hola,<br>soy <em>Antonio</em>.<br>Y ahora mismo<br>no tengo donde dormir.</h1>
+    <p class="typed-line"><span id="typed"></span><span class="cursor"></span></p>
 </header>
 
-<!-- ALERT -->
-<div class="alert-band">
-  ⚠️ Situación activa · Sin techo esta noche · Cualquier ayuda marca la diferencia
-</div>
-
-<!-- STORY -->
-<section>
-  <span class="section-label reveal">Mi situación</span>
-  <div class="story-section">
-    <h2 class="reveal">Todo empezó cuando<br>perdí a mi madre.</h2>
-
-    <p class="reveal">Me llamo <strong>Antonio Sánchez</strong>. Desde que murió mi madre, la relación con mi padre se fue deteriorando hasta hacerse insostenible. Siempre hubo tensión entre nosotros, pero su muerte lo cambió todo: sin ella como puente, no quedó tregua posible.</p>
-
-    <blockquote class="reveal">
-      <p>"Buscó cualquier excusa para denunciarme, una riña sin importancia. Me acusó de agresión. Era mentira."</p>
-    </blockquote>
-
-    <p class="reveal">Hubo juicio. <strong>Fui absuelto</strong>, porque no le pegué. Pero el daño ya estaba hecho: tengo una orden de alejamiento hacia él, lo que significa que <strong>no puedo entrar en mi propio hogar</strong>, aunque legalmente me corresponde una parte de ese piso por herencia de mi madre.</p>
-
-    <p class="reveal">Hoy cobro un subsidio que no cubre ni las deudas que acumulé con el banco mientras intentaba mantenerme a flote. <strong>No tengo donde dormir. No tengo dinero para comer.</strong> No soy perfecto, nadie lo es. Pero no me merezco vivir en la calle.</p>
-
-    <p class="reveal">Si has llegado hasta aquí, gracias por leer. Cualquier ayuda, por pequeña que sea, tiene un impacto real en mi vida.</p>
-  </div>
-</section>
-
-<!-- NEEDS -->
-<section style="padding-top: 0;">
-  <span class="section-label reveal">¿Para qué necesito ayuda?</span>
-  <div class="needs-grid reveal">
-    <div class="need-card">
-      <div class="icon">🏠</div>
-      <h3>Alojamiento</h3>
-      <p>Necesito cubrir una o varias noches en un albergue o habitación hasta encontrar estabilidad.</p>
-    </div>
-    <div class="need-card">
-      <div class="icon">🍽️</div>
-      <h3>Comida</h3>
-      <p>No tengo dinero para comer a diario. Cualquier cantidad ayuda a cubrir una comida.</p>
-    </div>
-    <div class="need-card">
-      <div class="icon">⚖️</div>
-      <h3>Situación legal</h3>
-      <p>Necesito orientación para reclamar mi parte del piso familiar por la herencia de mi madre.</p>
-    </div>
-    <div class="need-card">
-      <div class="icon">🔄</div>
-      <h3>Salir adelante</h3>
-      <p>Con un pequeño colchón económico podría estabilizarme y buscar trabajo con más tranquilidad.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider">
-  <div class="divider-line"></div>
-  <span class="divider-text">Ayúdame a superarlo</span>
-  <div class="divider-line"></div>
-</div>
-
-<!-- DONATE -->
-<div class="donate-section">
-  <div class="donate-inner">
-    <span class="section-label">Donación directa</span>
-    <h2>Una transferencia.<br><em>Un cambio real.</em></h2>
-    <p>No hay intermediarios. Tu dinero llega directamente a mí. Modifica los datos de abajo con tu IBAN real antes de compartir esta página.</p>
-
-    <div class="iban-box">
-      <span class="label-small">Titular</span>
-      <div class="value" id="titular">Antonio Sánchez</div>
-
-      <span class="label-small">IBAN</span>
-      <div class="value" id="iban-display">ES1320855272810330943405</div>
-      <p style="font-size:0.78rem; color:rgba(247,243,236,0.4); margin-top:-0.5rem; margin-bottom:1rem;">
-        ✏️ <em>Reemplaza este IBAN con el tuyo real antes de compartir</em>
-      </p>
-
-      <div class="iban-row">
-        <div>
-          <span class="label-small">Concepto sugerido</span>
-          <div class="value" style="font-size:0.95rem;">Ayuda Antonio</div>
+<div class="horizontal-scroll">
+    
+    <!-- Sección 1 -->
+    <div class="section-card reveal">
+        <span class="label">Te hablo de corazón</span>
+        <div class="story-wrap">
+            <h2>Todo se rompió cuando perdí a mi madre.</h2>
+            <p>Me llamo Antonio Sánchez y tengo 47 años. Hace poco más de un año murió mi madre, y con ella se fue la única persona que mantenía la paz en casa.</p>
+            <p>Mi padre y yo nunca nos llevamos bien. Cuando ella faltó, todo explotó. Una noche me denunció por agresión. Fui a juicio y gané, pero me pusieron una orden de alejamiento del piso donde he vivido toda mi vida.</p>
+            <p>Ahora no puedo volver a casa, aunque me corresponde una parte por herencia. Llevo semanas durmiendo donde puedo, y el subsidio no alcanza ni para comer todos los días.</p>
+            <p><strong>Gracias por leer mi historia.</strong> Significa mucho que alguien se pare a escucharme.</p>
         </div>
-        <div>
-          <span class="label-small">Entidad</span>
-          <div class="value" style="font-size:0.95rem;">Tu banco</div>
+    </div>
+
+    <!-- Sección 2 -->
+    <div class="section-card reveal">
+        <span class="label">En qué me ayudaría tu apoyo</span>
+        <div class="needs-grid">
+            <div class="need-card">
+                <h3>Un techo temporal</h3>
+                <p>Poder pagar algunas noches en un hostal o albergue mientras busco algo más estable.</p>
+            </div>
+            <div class="need-card">
+                <h3>Comer cada día</h3>
+                <p>No siempre tengo para una comida caliente. Cualquier ayuda aquí es directa.</p>
+            </div>
+            <div class="need-card">
+                <h3>La herencia</h3>
+                <p>Necesito dinero para un abogado que me ayude a reclamar mi parte del piso de mi madre.</p>
+            </div>
+            <div class="need-card">
+                <h3>Empezar de nuevo</h3>
+                <p>Un pequeño colchón para poder buscar trabajo con la cabeza más tranquila.</p>
+            </div>
         </div>
-      </div>
-
-      <button class="copy-btn" id="copyBtn" onclick="copyIBAN()">
-        <span>📋</span> Copiar IBAN
-      </button>
     </div>
 
-    <!-- QR -->
-    <div class="qr-container">
-      <p style="font-size:0.9rem; color:rgba(247,243,236,0.55); margin-bottom:0.5rem;">
-        Escanea para ver los datos de transferencia
-      </p>
-      <div class="qr-wrapper" id="qrcode"></div>
-      <span class="qr-label">Apunta la cámara aquí</span>
+    <!-- Sección Donación -->
+    <div class="section-card reveal donate-section" style="background:#1C1A17; color:#F7F3EC; min-width:85vw;">
+        <div class="donate-inner">
+            <span class="label">Donación directa</span>
+            <h2 style="color:#F7F3EC;">Una transferencia tuya<br><em>puede cambiar mi situación.</em></h2>
+            <p style="color:rgba(247,243,236,0.7);">Todo lo que llegue va directamente a mí.</p>
+            
+            <div class="iban-box">
+                <span class="slabel" style="color:var(--accent);">Titular</span>
+                <div class="val">Antonio Sánchez García</div>
+                <span class="slabel" style="color:var(--accent);">IBAN</span>
+                <div class="val" id="iban-val">ES00 0000 0000 0000 0000 0000</div>
+                <p style="font-size:0.75rem;color:rgba(247,243,236,0.35);margin:0.5rem 0 1rem;">
+                    Cambia este IBAN por el tuyo real antes de compartir
+                </p>
+                <button class="copy-btn" id="copyBtn" onclick="copyIBAN()">Copiar IBAN</button>
+            </div>
+
+            <div class="qr-area">
+                <p style="color:rgba(247,243,236,0.6);">Escanea este código para donar</p>
+                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ES0000000000000000000000" alt="QR para donación">
+                <p style="font-size:0.75rem;color:rgba(247,243,236,0.4);margin-top:1rem;">
+                    (Este QR es de ejemplo. Te explico abajo cómo poner el tuyo real)
+                </p>
+            </div>
+        </div>
     </div>
 
-  </div>
 </div>
 
-<!-- FOOTER -->
 <footer>
-  <p>Historia real de <strong>Antonio Sánchez</strong> · Publicada en 2025</p>
-  <p style="margin-top:0.5rem;">Si no puedes donar, compartir esta página también ayuda muchísimo. Gracias.</p>
+    <p>Mi historia · Antonio Sánchez · Zaragoza 2026</p>
+    <p style="margin-top:0.8rem;">Aunque no puedas ayudar económicamente, compartir esta página también me ayuda mucho. Gracias de corazón.</p>
 </footer>
 
 <script>
-// Typed.js
-new Typed('#typed-text', {
-  strings: [
-    'Mi padre me echó de casa.',
-    'Fui al juicio. Gané. Pero sigo en la calle.',
-    'No tengo donde dormir esta noche.',
-    'Solo pido una oportunidad para salir adelante.',
-    'Gracias por leer mi historia.'
-  ],
-  typeSpeed: 42,
-  backSpeed: 22,
-  backDelay: 2200,
-  loop: true,
-  cursorChar: '|'
-});
+    // Typed effect
+    const phrases = [
+        'Llevo semanas durmiendo en la calle...',
+        'Solo quiero un lugar seguro donde descansar.',
+        'No pensé que mi vida llegaría a esto.',
+        'Con un poco de ayuda puedo empezar a salir.',
+        'Gracias por leerme.'
+    ];
+    let pi = 0, ci = 0, del = false;
+    const tel = document.getElementById('typed');
 
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); }
-  });
-}, { threshold: 0.15 });
+    function tick() {
+        const p = phrases[pi];
+        if (!del) {
+            tel.textContent = p.slice(0, ++ci);
+            if (ci === p.length) { del = true; return setTimeout(tick, 2200); }
+            setTimeout(tick, 50);
+        } else {
+            tel.textContent = p.slice(0, --ci);
+            if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; return setTimeout(tick, 500); }
+            setTimeout(tick, 25);
+        }
+    }
+    setTimeout(tick, 800);
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // Scroll reveal simple
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// Copy IBAN
-function copyIBAN() {
-  const iban = document.getElementById('iban-display').textContent;
-  navigator.clipboard.writeText(iban).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ Copiado';
-    btn.classList.add('copied');
-    setTimeout(() => {
-      btn.innerHTML = '<span>📋</span> Copiar IBAN';
-      btn.classList.remove('copied');
-    }, 2500);
-  });
-}
-
-// QR Code — genera un QR con los datos de transferencia
-window.addEventListener('load', () => {
-  const iban = document.getElementById('iban-display').textContent.trim();
-  const titular = document.getElementById('titular').textContent.trim();
-  const qrText = `Transferencia bancaria\nTitular: ${titular}\nIBAN: ${iban}\nConcepto: Ayuda Antonio`;
-  new QRCode(document.getElementById('qrcode'), {
-    text: qrText,
-    width: 180,
-    height: 180,
-    colorDark: '#1C1A17',
-    colorLight: '#FFFFFF',
-    correctLevel: QRCode.CorrectLevel.M
-  });
-});
+    // Copy IBAN
+    function copyIBAN() {
+        const iban = document.getElementById('iban-val').textContent;
+        navigator.clipboard.writeText(iban).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copiado';
+            setTimeout(() => btn.textContent = originalText, 2000);
+        });
+    }
 </script>
 </body>
 </html>
