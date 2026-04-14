@@ -8,335 +8,375 @@
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --cream: #F7F3EC; 
-            --ink: #1C1A17; 
-            --warm: #8B6F47;
-            --accent: #C4773B; 
-            --light-warm: #E8DDD0; 
+            --cream: #F7F3EC;
+            --ink: #1C1A17;
+            --accent: #C4773B;
+            --light: #E8DDD0;
             --muted: #6B6259;
         }
-        body { 
-            background: var(--cream); 
-            color: var(--ink); 
-            font-family: 'Crimson Text', Georgia, serif; 
-            line-height: 1.8; 
-            overflow-x: hidden; 
+
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: 'Crimson Text', Georgia, serif;
+            overflow-x: hidden;
+            overflow-y: hidden; /* Solo scroll horizontal */
+            height: 100vh;
         }
+
         header {
-            min-height: 100vh; 
-            display: flex; 
+            height: 100vh;
+            display: flex;
             flex-direction: column;
-            justify-content: center; 
-            align-items: center; 
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 4rem 2rem; 
-            background: #1C1A17; 
+            background: linear-gradient(to bottom, #1C1A17, #2A2722);
+            color: white;
             position: relative;
         }
-        .header-label { 
-            font-size: 0.72rem; 
-            letter-spacing: 0.25em; 
-            text-transform: uppercase; 
-            color: var(--accent); 
-            margin-bottom: 2rem; 
-            animation: fadeUp 0.8s ease 0.3s both; 
-        }
-        header h1 { 
-            font-size: clamp(2.6rem, 8vw, 5rem); 
-            color: #F7F3EC; 
-            line-height: 1.1; 
-            margin-bottom: 1.5rem; 
-            animation: fadeUp 0.9s ease 0.5s both; 
-        }
-        header h1 em { 
-            font-style: italic; 
-            color: var(--accent); 
-        }
-        .typed-line { 
-            font-size: clamp(0.95rem, 2.5vw, 1.2rem); 
-            color: rgba(247,243,236,0.6); 
-            max-width: 560px; 
-            min-height: 2em; 
-            animation: fadeUp 0.9s ease 0.8s both; 
-        }
-        .cursor { 
-            display: inline-block; 
-            width: 2px; 
-            height: 1em; 
-            background: var(--accent); 
-            vertical-align: text-bottom; 
-            animation: blink 0.8s step-end infinite; 
+
+        .header-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
         }
 
-        /* Scroll horizontal con efecto 3D */
-        .horizontal-scroll {
+        header h1 {
+            font-size: clamp(2.8rem, 9vw, 5.5rem);
+            line-height: 1.05;
+            margin-bottom: 1.2rem;
+        }
+
+        header h1 em {
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .typed-line {
+            font-size: clamp(1rem, 3vw, 1.25rem);
+            color: rgba(255,255,255,0.65);
+            max-width: 520px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background: var(--accent);
+            vertical-align: middle;
+            animation: blink 0.8s infinite;
+        }
+
+        /* SCROLL HORIZONTAL PRINCIPAL */
+        .horizontal-container {
             display: flex;
+            height: 100vh;
             overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 4rem 2rem;
-            gap: 3rem;
+            overflow-y: hidden;
             scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            perspective: 1200px;
+            perspective: 1500px;
+            gap: 4rem;
+            padding: 0 8vw;
+            align-items: center;
         }
-        .section-card {
-            min-width: 85vw;
-            max-width: 760px;
-            background: var(--cream);
-            padding: 3rem 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+
+        .card {
+            min-width: 82vw;
+            max-width: 720px;
+            height: 78vh;
+            background: white;
+            border-radius: 20px;
+            padding: 3.5rem 2.8rem;
+            box-shadow: 0 30px 70px rgba(28, 26, 23, 0.25);
             scroll-snap-align: center;
-            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            transform: rotateY(8deg) scale(0.95);
-        }
-        .horizontal-scroll:hover .section-card,
-        .section-card:hover {
-            transform: rotateY(0deg) scale(1);
+            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transform: rotateY(-12deg) scale(0.88) translateZ(-80px);
+            opacity: 0.85;
+            position: relative;
         }
 
-        .label { 
-            display: block; 
-            font-size: 0.65rem; 
-            letter-spacing: 0.3em; 
-            text-transform: uppercase; 
-            color: var(--accent); 
-            margin-bottom: 1.5rem; 
-        }
-        .story-wrap { 
-            border-left: 2px solid var(--light-warm); 
-            padding-left: 2rem; 
-        }
-        .story-wrap h2 { 
-            font-size: clamp(1.7rem, 4vw, 2.5rem); 
-            font-weight: normal; 
-            line-height: 1.25; 
-            margin-bottom: 2rem; 
-        }
-        .story-wrap p { 
-            font-size: 1.05rem; 
-            color: var(--muted); 
-            margin-bottom: 1.4rem; 
-        }
-        .story-wrap p strong { color: var(--ink); }
-        blockquote { 
-            border-left: 3px solid var(--accent); 
-            padding: 0.5rem 0 0.5rem 1.75rem; 
-            margin: 2rem 0; 
-        }
-        blockquote p { 
-            font-style: italic; 
-            font-size: 1.2rem; 
-            color: var(--ink); 
-            line-height: 1.5; 
+        .card:hover,
+        .card:active {
+            transform: rotateY(0deg) scale(1) translateZ(0);
+            opacity: 1;
+            box-shadow: 0 40px 90px rgba(28, 26, 23, 0.35);
         }
 
-        .needs-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); 
-            gap: 1.5rem; 
-            margin-top: 1.5rem; 
-        }
-        .need-card { 
-            background: white; 
-            padding: 1.8rem 1.4rem; 
-            border: 1px solid var(--light-warm);
-            border-radius: 6px;
-        }
-        .need-card h3 { 
-            font-size: 1.1rem; 
-            margin-bottom: 0.6rem; 
-        }
-        .need-card p { 
-            font-size: 0.9rem; 
-            color: var(--muted); 
-            line-height: 1.5; 
+        .card.active {
+            transform: rotateY(0deg) scale(1.02) translateZ(50px);
         }
 
-        .donate-section { 
-            background: #1C1A17; 
-            color: #F7F3EC; 
-            padding: 5rem 2rem; 
+        .label {
+            font-size: 0.68rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1.8rem;
+            display: block;
         }
-        .donate-inner { 
-            max-width: 660px; 
-            margin: 0 auto; 
-            text-align: center; 
+
+        .card h2 {
+            font-size: clamp(1.85rem, 5vw, 2.6rem);
+            line-height: 1.2;
+            margin-bottom: 1.8rem;
+            font-weight: 400;
         }
-        .iban-box { 
-            background: rgba(255,255,255,0.05); 
-            border: 1px solid rgba(255,255,255,0.12); 
-            border-radius: 6px; 
-            padding: 2rem; 
-            text-align: left; 
-            margin: 2rem 0; 
+
+        .card p {
+            font-size: 1.08rem;
+            color: var(--muted);
+            margin-bottom: 1.4rem;
         }
-        .val { 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            color: #F7F3EC; 
-            letter-spacing: 0.04em; 
-            margin-bottom: 1.2rem; 
-            word-break: break-all; 
-            font-family: 'Courier New', monospace; 
+
+        .card strong {
+            color: var(--ink);
         }
-        .copy-btn { 
-            margin-top: 1rem; 
-            background: transparent; 
-            border: 1px solid rgba(255,255,255,0.3); 
-            color: #F7F3EC; 
-            font-family: 'Crimson Text', serif; 
-            font-size: 0.95rem; 
-            padding: 0.7rem 1.6rem; 
-            border-radius: 4px; 
-            cursor: pointer; 
+
+        blockquote {
+            border-left: 4px solid var(--accent);
+            padding-left: 1.8rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #3f3a32;
         }
+
+        /* Sección de necesidades */
+        .needs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1.4rem;
+            margin-top: 2rem;
+        }
+
+        .need-card {
+            background: #F7F3EC;
+            padding: 1.6rem 1.3rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .need-card h3 {
+            font-size: 1.15rem;
+            margin-bottom: 0.6rem;
+            color: var(--ink);
+        }
+
+        /* Donación */
+        .donate-card {
+            background: #1C1A17;
+            color: #F7F3EC;
+        }
+
+        .iban-box {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .val {
+            font-family: 'Courier New', monospace;
+            font-size: 1.15rem;
+            font-weight: bold;
+            word-break: break-all;
+            margin: 0.6rem 0;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
         .qr-area img {
-            max-width: 220px;
-            border: 8px solid white;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 240px;
+            border: 12px solid white;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
         }
 
-        footer { 
-            background: #0F0E0C; 
-            color: rgba(247,243,236,0.4); 
-            text-align: center; 
-            padding: 2.5rem 1rem; 
-            font-size: 0.85rem; 
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(15,14,12,0.95);
+            color: rgba(247,243,236,0.5);
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.82rem;
+            z-index: 100;
         }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
 
-        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes blink { 50% { opacity:0; } }
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.4);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            animation: fadeUp 2s infinite;
+        }
     </style>
 </head>
 <body>
 
 <header>
-    <p class="header-label">Zaragoza, abril 2026</p>
-    <h1>Hola,<br>soy <em>Antonio</em>.<br>Y ahora mismo<br>no tengo donde dormir.</h1>
+    <p class="header-label">Zaragoza • Abril 2026</p>
+    <h1>Hola,<br>soy <em>Antonio</em></h1>
     <p class="typed-line"><span id="typed"></span><span class="cursor"></span></p>
+    <div class="scroll-hint">Desliza → para conocer mi historia</div>
 </header>
 
-<div class="horizontal-scroll">
-    
-    <!-- Sección 1 -->
-    <div class="section-card reveal">
-        <span class="label">Te hablo de corazón</span>
-        <div class="story-wrap">
-            <h2>Todo se rompió cuando perdí a mi madre.</h2>
-            <p>Me llamo Antonio Sánchez y tengo 47 años. Hace poco más de un año murió mi madre, y con ella se fue la única persona que mantenía la paz en casa.</p>
-            <p>Mi padre y yo nunca nos llevamos bien. Cuando ella faltó, todo explotó. Una noche me denunció por agresión. Fui a juicio y gané, pero me pusieron una orden de alejamiento del piso donde he vivido toda mi vida.</p>
-            <p>Ahora no puedo volver a casa, aunque me corresponde una parte por herencia. Llevo semanas durmiendo donde puedo, y el subsidio no alcanza ni para comer todos los días.</p>
-            <p><strong>Gracias por leer mi historia.</strong> Significa mucho que alguien se pare a escucharme.</p>
-        </div>
+<div class="horizontal-container" id="horizontalScroll">
+
+    <!-- Tarjeta 1: Mi historia -->
+    <div class="card">
+        <span class="label">Te hablo desde el corazón</span>
+        <h2>Todo cambió cuando perdí a mi madre</h2>
+        <p>Me llamo Antonio Sánchez, tengo 47 años y vivo en Zaragoza.</p>
+        <p>Cuando mi madre falleció, la relación con mi padre se rompió por completo. Las discusiones fueron constantes hasta que una noche me denunció por algo que no hice.</p>
+        <blockquote>"Fui a juicio y gané, pero me pusieron una orden de alejamiento de mi propia casa."</blockquote>
+        <p>Ahora no puedo volver al piso que compartía con ella, aunque por herencia me corresponde una parte. Llevo varias semanas sin un techo fijo y el subsidio no alcanza para cubrir lo básico.</p>
+        <p><strong>Gracias por pararte a leer mi historia.</strong> Para mí ya es mucho que alguien me escuche.</p>
     </div>
 
-    <!-- Sección 2 -->
-    <div class="section-card reveal">
-        <span class="label">En qué me ayudaría tu apoyo</span>
+    <!-- Tarjeta 2: En qué ayuda -->
+    <div class="card">
+        <span class="label">Cómo puedes ayudarme</span>
+        <h2>Tu ayuda puede marcar la diferencia</h2>
         <div class="needs-grid">
             <div class="need-card">
                 <h3>Un techo temporal</h3>
-                <p>Poder pagar algunas noches en un hostal o albergue mientras busco algo más estable.</p>
+                <p>Pagar noches en un hostal o albergue mientras busco estabilidad.</p>
             </div>
             <div class="need-card">
-                <h3>Comer cada día</h3>
-                <p>No siempre tengo para una comida caliente. Cualquier ayuda aquí es directa.</p>
+                <h3>Comida diaria</h3>
+                <p>Poder comer caliente todos los días.</p>
             </div>
             <div class="need-card">
-                <h3>La herencia</h3>
-                <p>Necesito dinero para un abogado que me ayude a reclamar mi parte del piso de mi madre.</p>
+                <h3>Tramitar la herencia</h3>
+                <p>Dinero para un abogado que me ayude a reclamar mi parte del piso.</p>
             </div>
             <div class="need-card">
-                <h3>Empezar de nuevo</h3>
-                <p>Un pequeño colchón para poder buscar trabajo con la cabeza más tranquila.</p>
+                <h3>Empezar de cero</h3>
+                <p>Un pequeño colchón para buscar trabajo con menos angustia.</p>
             </div>
         </div>
     </div>
 
-    <!-- Sección Donación -->
-    <div class="section-card reveal donate-section" style="background:#1C1A17; color:#F7F3EC; min-width:85vw;">
-        <div class="donate-inner">
-            <span class="label">Donación directa</span>
-            <h2 style="color:#F7F3EC;">Una transferencia tuya<br><em>puede cambiar mi situación.</em></h2>
-            <p style="color:rgba(247,243,236,0.7);">Todo lo que llegue va directamente a mí.</p>
-            
-            <div class="iban-box">
-                <span class="slabel" style="color:var(--accent);">Titular</span>
-                <div class="val">Antonio Sánchez García</div>
-                <span class="slabel" style="color:var(--accent);">IBAN</span>
-                <div class="val" id="iban-val">ES00 0000 0000 0000 0000 0000</div>
-                <p style="font-size:0.75rem;color:rgba(247,243,236,0.35);margin:0.5rem 0 1rem;">
-                    Cambia este IBAN por el tuyo real antes de compartir
-                </p>
-                <button class="copy-btn" id="copyBtn" onclick="copyIBAN()">Copiar IBAN</button>
-            </div>
+    <!-- Tarjeta 3: Donación -->
+    <div class="card donate-card">
+        <span class="label">Donación directa</span>
+        <h2 style="color:#F7F3EC;">Una transferencia tuya<br><em>puede cambiarlo todo</em></h2>
+        <p style="color:rgba(247,243,236,0.75);">Sin intermediarios. Todo llega directamente a mí.</p>
 
-            <div class="qr-area">
-                <p style="color:rgba(247,243,236,0.6);">Escanea este código para donar</p>
-                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ES0000000000000000000000" alt="QR para donación">
-                <p style="font-size:0.75rem;color:rgba(247,243,236,0.4);margin-top:1rem;">
-                    (Este QR es de ejemplo. Te explico abajo cómo poner el tuyo real)
-                </p>
-            </div>
+        <div class="iban-box">
+            <span style="font-size:0.7rem;letter-spacing:0.2em;color:#C4773B;">TITULAR</span>
+            <div class="val">Antonio Sánchez García</div>
+            
+            <span style="font-size:0.7rem;letter-spacing:0.2em;color:#C4773B;">IBAN</span>
+            <div class="val" id="iban-val">ES00 0000 0000 0000 0000 0000</div>
+
+            <button class="copy-btn" id="copyBtn" onclick="copyIBAN()">Copiar IBAN</button>
+        </div>
+
+        <div class="qr-area" style="text-align:center; margin-top:2rem;">
+            <p style="margin-bottom:1rem; color:rgba(247,243,236,0.7);">O escanea aquí</p>
+            <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=ES0000000000000000000000" alt="QR Donación">
         </div>
     </div>
 
 </div>
 
 <footer>
-    <p>Mi historia · Antonio Sánchez · Zaragoza 2026</p>
-    <p style="margin-top:0.8rem;">Aunque no puedas ayudar económicamente, compartir esta página también me ayuda mucho. Gracias de corazón.</p>
+    Mi historia · Antonio Sánchez · Zaragoza 2026<br>
+    <span style="opacity:0.6;">Compartir esta página también ayuda mucho. Gracias de corazón.</span>
 </footer>
 
 <script>
     // Typed effect
     const phrases = [
-        'Llevo semanas durmiendo en la calle...',
-        'Solo quiero un lugar seguro donde descansar.',
-        'No pensé que mi vida llegaría a esto.',
-        'Con un poco de ayuda puedo empezar a salir.',
-        'Gracias por leerme.'
+        "Llevo semanas sin un lugar donde dormir...",
+        "Solo quiero poder descansar tranquilo.",
+        "Nunca imaginé que acabaría así.",
+        "Con tu ayuda puedo empezar a salir adelante.",
+        "Gracias por escucharme."
     ];
-    let pi = 0, ci = 0, del = false;
-    const tel = document.getElementById('typed');
+    let i = 0, j = 0, deleting = false;
+    const typed = document.getElementById('typed');
 
-    function tick() {
-        const p = phrases[pi];
-        if (!del) {
-            tel.textContent = p.slice(0, ++ci);
-            if (ci === p.length) { del = true; return setTimeout(tick, 2200); }
-            setTimeout(tick, 50);
+    function type() {
+        const current = phrases[i];
+        if (!deleting) {
+            typed.textContent = current.substring(0, ++j);
+            if (j === current.length) {
+                deleting = true;
+                setTimeout(type, 1800);
+                return;
+            }
+            setTimeout(type, 55);
         } else {
-            tel.textContent = p.slice(0, --ci);
-            if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; return setTimeout(tick, 500); }
-            setTimeout(tick, 25);
+            typed.textContent = current.substring(0, --j);
+            if (j === 0) {
+                deleting = false;
+                i = (i + 1) % phrases.length;
+                setTimeout(type, 400);
+                return;
+            }
+            setTimeout(type, 30);
         }
     }
-    setTimeout(tick, 800);
-
-    // Scroll reveal simple
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    setTimeout(type, 1200);
 
     // Copy IBAN
     function copyIBAN() {
         const iban = document.getElementById('iban-val').textContent;
         navigator.clipboard.writeText(iban).then(() => {
             const btn = document.getElementById('copyBtn');
-            const originalText = btn.textContent;
-            btn.textContent = '✓ Copiado';
-            setTimeout(() => btn.textContent = originalText, 2000);
+            const original = btn.textContent;
+            btn.textContent = "✓ Copiado";
+            setTimeout(() => btn.textContent = original, 2200);
         });
     }
+
+    // Efecto visual al hacer scroll horizontal
+    const container = document.getElementById('horizontalScroll');
+    container.addEventListener('scroll', () => {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            const rect = card.getBoundingClientRect();
+            const center = window.innerWidth / 2;
+            const distance = Math.abs(rect.left + rect.width/2 - center);
+            if (distance < 150) {
+                card.classList.add('active');
+            } else {
+                card.classList.remove('active');
+            }
+        });
+    });
 </script>
 </body>
 </html>
